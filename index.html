@@ -1,10 +1,3 @@
-<script>
-const pass = prompt("Only for Deeksha 🩷\nEnter password:");
-if(pass !== "deeksha"){
-  document.body.innerHTML="<h2 style='color:white'>Wrong password 😔</h2>";
-}
-</script>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,9 +10,10 @@ if(pass !== "deeksha"){
 
 <style>
 *{
-  margin:0;padding:0;box-sizing:border-box;
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
   font-family:'Quicksand',sans-serif;
-  cursor:url('https://cur.cursors-4u.net/symbols/sym-1/sym46.cur'),auto;
 }
 body{
   min-height:100vh;
@@ -31,16 +25,16 @@ body{
 }
 .card{
   background:#ffffffee;
-  padding:35px 30px;
+  padding:32px 28px;
   border-radius:30px;
-  max-width:430px;
+  max-width:420px;
   width:92%;
   text-align:center;
   box-shadow:0 25px 50px rgba(0,0,0,0.18);
   animation:pop .7s ease;
 }
 @keyframes pop{
-  from{transform:scale(.8);opacity:0}
+  from{transform:scale(.85);opacity:0}
   to{transform:scale(1);opacity:1}
 }
 .teddy{
@@ -77,21 +71,25 @@ button{
   border-radius:30px;
   font-size:14px;
   cursor:pointer;
-  transition:.3s;
 }
 .forgive{
   background:#ff4d88;
   color:white;
   box-shadow:0 10px 20px rgba(255,77,136,.4);
+  transition:.3s;
 }
-.forgive:hover{transform:scale(1.1)}
+.forgive:hover{
+  transform:scale(1.1);
+}
 .angry{
   background:#f2f2f2;
   color:#333;
   position:relative;
+  transition:transform .25s ease-out;
+  touch-action:manipulation;
 }
 .footer{
-  margin-top:20px;
+  margin-top:18px;
   font-size:13px;
   color:#777;
 }
@@ -126,7 +124,7 @@ button{
 }
 .popup-content{
   background:white;
-  padding:30px;
+  padding:28px;
   border-radius:25px;
   max-width:320px;
   text-align:center;
@@ -137,11 +135,12 @@ button{
 
 <body>
 
-<!-- PASSWORD SCREEN -->
+<!-- PASSWORD -->
 <script>
 const pass = prompt("Only for Deeksha 🩷\nEnter password:");
 if(pass !== "deeksha"){
-  document.body.innerHTML="<h2 style='color:white'>Wrong password 😔</h2>";
+  document.body.innerHTML =
+    "<h2 style='color:white;text-align:center'>Wrong password 😔</h2>";
 }
 </script>
 
@@ -164,8 +163,10 @@ if(pass !== "deeksha"){
 <div class="popup" id="popup">
   <div class="popup-content">
     <h3>Thank you 🥹🩷</h3>
-    <p>You have no idea how much this means to me.<br>
-    I promise to protect your feelings better.</p>
+    <p>
+      You have no idea how much this means to me.<br>
+      I promise to protect your feelings better.
+    </p>
     <button class="forgive" onclick="closePopup()">Okay 🤍</button>
   </div>
 </div>
@@ -195,44 +196,55 @@ and always you-first.
 Pinky promise 🩷
 `;
 
-let i=0;
-const text=document.getElementById("text");
+let i = 0;
+const text = document.getElementById("text");
 (function type(){
-  if(i<message.length){
-    text.innerHTML+=message.charAt(i++);
-    setTimeout(type,32);
+  if(i < message.length){
+    text.innerHTML += message.charAt(i++);
+    setTimeout(type, 32);
   }
 })();
 
-// forgive
+// Forgive
 function forgive(){
-  confetti({particleCount:180,spread:90,origin:{y:.6}});
+  confetti({
+    particleCount:180,
+    spread:90,
+    origin:{y:.6}
+  });
   document.getElementById("popup").style.display="flex";
 }
 
-// angry button
-const angry=document.getElementById("angryBtn");
-angry.addEventListener("mouseover",()=>{
-  angry.style.transform=`translate(${Math.random()*240-120}px,${Math.random()*200-100}px)`;
-});
+// Smooth mobile-friendly deny button
+const angry = document.getElementById("angryBtn");
 
-// floating stickers
+function moveButton(){
+  const x = Math.random()*160 - 80;
+  const y = Math.random()*140 - 70;
+  angry.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+angry.addEventListener("touchstart", moveButton);
+angry.addEventListener("mouseenter", moveButton);
+angry.addEventListener("click", moveButton);
+
+// Floating stickers
 setInterval(()=>{
-  const s=document.createElement("div");
-  s.className="float";
-  s.innerHTML=["💗","🩷","💕","🌸","✨","🥺"][Math.floor(Math.random()*6)];
-  s.style.left=Math.random()*100+"vw";
-  s.style.animationDuration=4+Math.random()*3+"s";
+  const s = document.createElement("div");
+  s.className = "float";
+  s.innerHTML = ["💗","🩷","💕","🌸","✨","🥺"][Math.floor(Math.random()*6)];
+  s.style.left = Math.random()*100 + "vw";
+  s.style.animationDuration = 4 + Math.random()*3 + "s";
   document.body.appendChild(s);
   setTimeout(()=>s.remove(),7000);
 },400);
 
-// music
-const m=document.getElementById("music");
-let play=false;
+// Music
+const music = document.getElementById("music");
+let playing = false;
 function toggleMusic(){
-  play?m.pause():m.play();
-  play=!play;
+  playing ? music.pause() : music.play();
+  playing = !playing;
 }
 
 function closePopup(){
